@@ -558,8 +558,8 @@ export function generatePreview(parameters, images, status, watchModelDescriptor
 
 /**
  * Return the value at `path` in object if it exists, undefined otherwise
- * @param {object} object 
- * @param {string} path 
+ * @param {object} object
+ * @param {string} path
  * @param {string} lang Languages to use (EN, CN, CN2)
  */
 function getPath(object, path, lang) {
@@ -606,15 +606,16 @@ function displayImageFromRange(result, imageRangeParameter, value) {
 function displayText(result, images, elementImageIds, style) {
     // convert aligment to flag value
     const alignment = parseParameterValue(style.Alignment, "alignment")
+    const elementImageIdsFiltered = elementImageIds.filter(imgId => imgId < images.length)
 
     // compute width of text to display
-    const textWidth = elementImageIds.map(imgId => images[imgId].width).reduce((a, b) => a + b + style.SpacingX)
+    const textWidth = elementImageIdsFiltered.map(imgId => images[imgId].width).reduce((a, b) => a + b + style.SpacingX)
 
     // compute coordinates of the left of the first character
     let x = computePositionWithAligment(style.TopLeftX, style.BottomRightX, textWidth, alignment)
 
     // Add all characters
-    for (const [i, elementImageId] of elementImageIds.entries()) {
+    for (const [i, elementImageId] of elementImageIdsFiltered.entries()) {
         const image = images[elementImageId]
         result.push({
             imageId: elementImageId,
@@ -630,8 +631,8 @@ function displayText(result, images, elementImageIds, style) {
 
 /**
  * Compute position of element withing the given bounds for the given aligment
- * @param {number} lowerBound 
- * @param {number} upperBound 
+ * @param {number} lowerBound
+ * @param {number} upperBound
  * @param {number} elementSize
  * @param {number} alignment //flag containing the aligment 2: upper bound, 4: lower bound, 8: centered
  * @returns {{x: number, y: number}}

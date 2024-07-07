@@ -37,6 +37,7 @@
     "jest": "^28.1.2"
   },
   "dependencies": {
+    "canvas": "^2.11.2",
     "commander": "^9.4.0",
     "jszip": "^3.10.0",
     "pngjs": "^6.0.0"
